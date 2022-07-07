@@ -1,4 +1,4 @@
-# Customizable NFT Drop Minting Page
+# Customizable Edition Drop Minting Page
 
 In this example, you can create your own NFT Drop minting page just by customising the template with your branding, and plugging in your NFT Drop contract address.
 
@@ -15,7 +15,7 @@ To create your own version of this template, you can use the following steps:
 Run this command from the terminal to clone this project:
 
 ```bash
-npx create-tw-app --example custom-minting-page
+npx create-tw-app --template edition-drop
 ```
 
 ### 1. Deploy Your Own NFT Drop on thirdweb
