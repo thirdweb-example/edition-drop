@@ -29,7 +29,6 @@ const Home: NextPage = () => {
 
   // The amount the user claims, updates when they type a value into the input field.
   const [quantity, setQuantity] = useState<number>(1); // default to 1
-  const [claiming, setClaiming] = useState<boolean>(false);
 
   // Load contract metadata
   const { data: contractMetadata } = useContractMetadata(
@@ -65,8 +64,6 @@ const Home: NextPage = () => {
       return;
     }
 
-    setClaiming(true);
-
     try {
       mintNft(
         {
@@ -87,8 +84,6 @@ const Home: NextPage = () => {
     } catch (error) {
       const e = error as Error;
       alert((e?.message as string) || "Something went wrong");
-    } finally {
-      setClaiming(false);
     }
   }
 
@@ -162,9 +157,9 @@ const Home: NextPage = () => {
               <button
                 className={`${styles.mainButton} ${styles.spacerTop} ${styles.spacerBottom}`}
                 onClick={mint}
-                disabled={claiming}
+                disabled={isMinting}
               >
-                {claiming ? "Minting..." : "Mint"}
+                {isMinting ? "Minting..." : "Mint"}
               </button>
             </>
           ) : (
