@@ -1,12 +1,12 @@
-# Customizable NFT Drop Minting Page
+# Customizable Edition Drop Minting Page
 
-In this example, you can create your own NFT Drop minting page just by customising the template with your branding, and plugging in your NFT Drop contract address.
+In this template, we build a page where users can claim NFTs from the [Edition Drop](https://portal.thirdweb.com/pre-built-contracts/edition-drop) contract.
 
 ## Tools
 
-- [**thirdweb NFT Drop**](https://portal.thirdweb.com/pre-built-contracts/nft-drop): to create a lazy-minted ERC721 NFT Collection that our users can claim.
-- [**thirdweb React SDK**](https://docs.thirdweb.com/react): to enable users to connect their wallets with the [useMetamask](https://portal.thirdweb.com/react/react.usemetamask) hook, and access hooks such as [useNFTDrop](https://portal.thirdweb.com/react/react.usenftdrop) to interact with the NFT drop contract.
-- [**thirdweb TypeScript SDK**](https://docs.thirdweb.com/typescript): to view the claimed supply, total supply, and mint NFTs from the drop.
+- [**Edition Drop**](https://portal.thirdweb.com/pre-built-contracts/edition-drop): Create a collection of ERC-1155 NFTs and release them to users under [claim conditions](https://portal.thirdweb.com/pre-built-contracts/edition-drop#minting--claiming-nfts).
+- [**React SDK**](https://docs.thirdweb.com/react): to enable users to connect their wallets with the [useMetamask](https://portal.thirdweb.com/react/react.usemetamask) hook, and access hooks such as [useNFTDrop](https://portal.thirdweb.com/react/react.usenftdrop) to interact with the NFT drop contract.
+- [**TypeScript SDK**](https://docs.thirdweb.com/typescript): to view the claimed supply, total supply, and mint NFTs from the drop.
 
 ## Using This Repo
 
@@ -15,12 +15,12 @@ To create your own version of this template, you can use the following steps:
 Run this command from the terminal to clone this project:
 
 ```bash
-npx create-tw-app --example custom-minting-page
+npx create-tw-app --example edition-drop
 ```
 
-### 1. Deploy Your Own NFT Drop on thirdweb
+### 1. Deploy Your Own Edition Drop on thirdweb
 
-Head to the thirdweb dashboard and create your own NFT Drop contract.
+Head to the [dashboard](https://thirdweb.com/dashboard) and create your own **Edition Drop** contract.
 
 You can learn how to do that with our guide [Release an NFT drop on your own site without writing any code](https://portal.thirdweb.com/guides/release-an-nft-drop-with-no-code#create-a-drop-contract).
 
@@ -38,12 +38,12 @@ You can configure:
 - The font with `--font`
 - The border colors with `--border-color`
 
-### 3. Plug in your NFT Drop contract address
+### 3. Plug in your Edition Drop contract address
 
-Replace the value of the `myNftDropContractAddress` inside [`index.tsx`](/pages/index.tsx) with your NFT Drop contract address you can find in the dashboard.
+Replace the value of the `myEditionDropContractAddress` inside [`index.tsx`](/pages/index.tsx) with your Edition Drop contract address (you can find in the dashboard).
 
 ---
 
 ## Join our Discord!
 
-For any questions, suggestions, join our discord at [https://discord.gg/thirdweb](https://discord.gg/thirdweb).
+For any questions, suggestions, join our Discord at [https://discord.gg/thirdweb](https://discord.gg/thirdweb).

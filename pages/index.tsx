@@ -6,12 +6,14 @@ import {
   useEditionDrop,
   useNFT,
   ThirdwebNftMedia,
+  useAddress,
+  useMetamask,
+  useNetworkMismatch,
+  useClaimNFT,
 } from "@thirdweb-dev/react";
-import { useNetworkMismatch } from "@thirdweb-dev/react";
-import { useAddress, useMetamask } from "@thirdweb-dev/react";
 import { BigNumber } from "ethers";
-import type { NextPage } from "next";
 import { useState } from "react";
+import type { NextPage } from "next";
 import styles from "../styles/Theme.module.css";
 
 // Put Your Edition Drop Contract address from the dashboard here
@@ -36,16 +38,13 @@ const Home: NextPage = () => {
 
   const { data: nftMetadata } = useNFT(editionDrop, 0);
 
+  const { mutate: mintNft, isLoading: isMinting } = useClaimNFT(editionDrop);
+
   // Load the active claim condition
   const { data: activeClaimCondition } = useActiveClaimCondition(
     editionDrop,
     BigNumber.from(0)
   );
-
-  console.log({
-    contractMetadata,
-    activeClaimCondition,
-  });
 
   // Loading state while we fetch the metadata
   if (!editionDrop || !contractMetadata) {
@@ -69,12 +68,25 @@ const Home: NextPage = () => {
     setClaiming(true);
 
     try {
-      const minted = await editionDrop?.claim(0, quantity);
-      console.log(minted);
-      alert(`Successfully minted NFT${quantity > 1 ? "s" : ""}!`);
-    } catch (error: any) {
-      console.error(error);
-      alert((error?.message as string) || "Something went wrong");
+      mintNft(
+        {
+          quantity: quantity,
+          to: address,
+          tokenId: 0,
+        },
+        {
+          onSuccess: (data) => {
+            alert(`Successfully minted NFT${quantity > 1 ? "s" : ""}!`);
+          },
+          onError: (error) => {
+            const e = error as Error;
+            alert((e?.message as string) || "Something went wrong");
+          },
+        }
+      );
+    } catch (error) {
+      const e = error as Error;
+      alert((e?.message as string) || "Something went wrong");
     } finally {
       setClaiming(false);
     }
