@@ -15,7 +15,7 @@ To create your own version of this template, you can use the following steps:
 Run this command from the terminal to clone this project:
 
 ```bash
-npx create-tw-app --example edition-drop
+npx thirdweb create --template edition-drop
 ```
 
 ### 1. Deploy Your Own Edition Drop on thirdweb
