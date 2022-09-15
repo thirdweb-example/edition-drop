@@ -1,15 +1,9 @@
 import {
-  ChainId,
   useContractMetadata,
-  useNetwork,
   useActiveClaimCondition,
-  useEditionDrop,
   useNFT,
-  ThirdwebNftMedia,
-  useAddress,
-  useMetamask,
-  useNetworkMismatch,
-  useClaimNFT,
+  Web3Button,
+  useContract,
 } from "@thirdweb-dev/react";
 import { BigNumber } from "ethers";
 import { useState } from "react";
@@ -20,71 +14,30 @@ import styles from "../styles/Theme.module.css";
 const myEditionDropContractAddress =
   "0x11232C2cd1757C3e4f78dcda318Bdfc6Bc5873A3";
 
+// Put your token ID here
+const tokenId = 0;
+
 const Home: NextPage = () => {
-  const editionDrop = useEditionDrop(myEditionDropContractAddress);
-  const address = useAddress();
-  const connectWithMetamask = useMetamask();
-  const isOnWrongNetwork = useNetworkMismatch();
-  const [, switchNetwork] = useNetwork();
+  const { contract: editionDrop } = useContract(myEditionDropContractAddress);
 
   // The amount the user claims, updates when they type a value into the input field.
   const [quantity, setQuantity] = useState<number>(1); // default to 1
 
   // Load contract metadata
-  const { data: contractMetadata } = useContractMetadata(
-    myEditionDropContractAddress
-  );
+  const { data: contractMetadata } = useContractMetadata(editionDrop);
 
-  const { data: nftMetadata } = useNFT(editionDrop, 0);
-
-  const { mutate: mintNft, isLoading: isMinting } = useClaimNFT(editionDrop);
+  // Load the NFT metadata
+  const { data: nftMetadata } = useNFT(editionDrop, tokenId);
 
   // Load the active claim condition
   const { data: activeClaimCondition } = useActiveClaimCondition(
     editionDrop,
-    BigNumber.from(0)
+    BigNumber.from(tokenId)
   );
 
   // Loading state while we fetch the metadata
   if (!editionDrop || !contractMetadata) {
     return <div className={styles.container}>Loading...</div>;
-  }
-
-  // Function to mint/claim an NFT
-  async function mint() {
-    // Make sure the user has their wallet connected.
-    if (!address) {
-      connectWithMetamask();
-      return;
-    }
-
-    // Make sure the user is on the correct network (same network as your NFT Drop is).
-    if (isOnWrongNetwork) {
-      switchNetwork && switchNetwork(ChainId.Mumbai);
-      return;
-    }
-
-    try {
-      mintNft(
-        {
-          quantity: quantity,
-          to: address,
-          tokenId: 0,
-        },
-        {
-          onSuccess: (data) => {
-            alert(`Successfully minted NFT${quantity > 1 ? "s" : ""}!`);
-          },
-          onError: (error) => {
-            const e = error as Error;
-            alert((e?.message as string) || "Something went wrong");
-          },
-        }
-      );
-    } catch (error) {
-      const e = error as Error;
-      alert((e?.message as string) || "Something went wrong");
-    }
   }
 
   return (
@@ -99,10 +52,10 @@ const Home: NextPage = () => {
 
         <div className={styles.imageSide}>
           {/* Image Preview of NFTs */}
-          <ThirdwebNftMedia
-            // @ts-ignore
-            metadata={nftMetadata?.metadata}
+          <img
             className={styles.image}
+            src={nftMetadata?.metadata?.image}
+            alt={`${nftMetadata?.metadata?.name} preview image`}
           />
 
           {/* Amount claimed so far */}
@@ -126,47 +79,49 @@ const Home: NextPage = () => {
           </div>
 
           {/* Show claim button or connect wallet button */}
-          {address ? (
-            <>
-              <p>Quantity</p>
-              <div className={styles.quantityContainer}>
-                <button
-                  className={`${styles.quantityControlButton}`}
-                  onClick={() => setQuantity(quantity - 1)}
-                  disabled={quantity <= 1}
-                >
-                  -
-                </button>
+          <>
+            <p>Quantity</p>
+            <div className={styles.quantityContainer}>
+              <button
+                className={`${styles.quantityControlButton}`}
+                onClick={() => setQuantity(quantity - 1)}
+                disabled={quantity <= 1}
+              >
+                -
+              </button>
 
-                <h4>{quantity}</h4>
-
-                <button
-                  className={`${styles.quantityControlButton}`}
-                  onClick={() => setQuantity(quantity + 1)}
-                  disabled={
-                    quantity >=
-                    parseInt(
-                      activeClaimCondition?.quantityLimitPerTransaction || "0"
-                    )
-                  }
-                >
-                  +
-                </button>
-              </div>
+              <h4>{quantity}</h4>
 
               <button
-                className={`${styles.mainButton} ${styles.spacerTop} ${styles.spacerBottom}`}
-                onClick={mint}
-                disabled={isMinting}
+                className={`${styles.quantityControlButton}`}
+                onClick={() => setQuantity(quantity + 1)}
+                disabled={
+                  quantity >=
+                  parseInt(
+                    activeClaimCondition?.quantityLimitPerTransaction || "0"
+                  )
+                }
               >
-                {isMinting ? "Minting..." : "Mint"}
+                +
               </button>
-            </>
-          ) : (
-            <button className={styles.mainButton} onClick={connectWithMetamask}>
-              Connect Wallet
-            </button>
-          )}
+            </div>
+            <div className={styles.mintContainer}>
+              <Web3Button
+                contractAddress={myEditionDropContractAddress}
+                action={async (contract) =>
+                  await contract.erc1155.claim(tokenId, quantity)
+                }
+                // If the function is successful, we can do something here.
+                onSuccess={(result) => alert("Claimed!")}
+                // If the function fails, we can do something here.
+                onError={(error) => alert(error?.message)}
+                accentColor="#f213a4"
+                colorMode="dark"
+              >
+                Mint {quantity} NFT{quantity > 1 ? "s" : ""}
+              </Web3Button>
+            </div>
+          </>
         </div>
       </div>
       {/* Powered by thirdweb */}{" "}
