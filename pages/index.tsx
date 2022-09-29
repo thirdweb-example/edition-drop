@@ -54,7 +54,7 @@ const Home: NextPage = () => {
           {/* Image Preview of NFTs */}
           <img
             className={styles.image}
-            src={nftMetadata?.metadata?.image}
+            src={nftMetadata?.metadata?.image || ""}
             alt={`${nftMetadata?.metadata?.name} preview image`}
           />
 
