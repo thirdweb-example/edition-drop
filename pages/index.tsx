@@ -1,18 +1,17 @@
 import {
-  useContractMetadata,
   useActiveClaimCondition,
+  useContract,
+  useContractMetadata,
   useNFT,
   Web3Button,
-  useContract,
 } from "@thirdweb-dev/react";
-import { BigNumber } from "ethers";
-import { useState } from "react";
 import type { NextPage } from "next";
+import { useState } from "react";
 import styles from "../styles/Theme.module.css";
 
 // Put Your Edition Drop Contract address from the dashboard here
 const myEditionDropContractAddress =
-  "0x11232C2cd1757C3e4f78dcda318Bdfc6Bc5873A3";
+  "0x4894833987b4E9629d1Bc7ebdAB21a56F5c09a36";
 
 // Put your token ID here
 const tokenId = 0;
@@ -32,7 +31,7 @@ const Home: NextPage = () => {
   // Load the active claim condition
   const { data: activeClaimCondition } = useActiveClaimCondition(
     editionDrop,
-    BigNumber.from(tokenId)
+    tokenId
   );
 
   // Loading state while we fetch the metadata
@@ -69,7 +68,9 @@ const Home: NextPage = () => {
                   {/* Claimed supply so far */}
                   <b>{activeClaimCondition.currentMintSupply}</b>
                   {" / "}
-                  {activeClaimCondition.maxQuantity}
+                  {activeClaimCondition.availableSupply === "unlimited"
+                    ? "∞"
+                    : activeClaimCondition.maxClaimableSupply}
                 </p>
               ) : (
                 // Show loading state if we're still loading the supply
@@ -98,7 +99,8 @@ const Home: NextPage = () => {
                 disabled={
                   quantity >=
                   parseInt(
-                    activeClaimCondition?.quantityLimitPerTransaction || "0"
+                    activeClaimCondition?.maxClaimablePerWallet.toString() ||
+                      "0"
                   )
                 }
               >
@@ -112,7 +114,7 @@ const Home: NextPage = () => {
                   await contract.erc1155.claim(tokenId, quantity)
                 }
                 // If the function is successful, we can do something here.
-                onSuccess={(result) => alert("Claimed!")}
+                onSuccess={() => alert("Claimed!")}
                 // If the function fails, we can do something here.
                 onError={(error) => alert(error?.message)}
                 accentColor="#f213a4"
@@ -126,7 +128,7 @@ const Home: NextPage = () => {
       </div>
       {/* Powered by thirdweb */}{" "}
       <img
-        src={`/logo.png`}
+        src="/logo.png"
         alt="Thirdweb Logo"
         width={135}
         className={styles.buttonGapTop}
