@@ -45,6 +45,15 @@ Replace the value of the `myEditionDropContractAddress` inside [`yourDetails.ts`
 Replace the value of the `tokenId` inside [`yourDetails.ts`](/const/yourDetails.ts) with your tokenId.
 
 
+### 4. Configure Your Network
+
+Inside [`_app.tsx`](/pages/_app.tsx) you can configure the network you want to use:
+
+```jsx
+// This is the chain your dApp will work on.
+const activeChain = "mumbai";
+```
+
 ## Join our Discord!
 
 For any questions, suggestions, join our Discord at [https://discord.gg/thirdweb](https://discord.gg/thirdweb).
