@@ -42,6 +42,9 @@ You can configure:
 
 Replace the value of the `myEditionDropContractAddress` inside [`yourDetails.ts`](/const/yourDetails.ts) with your Edition Drop contract address you can find in the dashboard.
 
+Replace the value of the `tokenId` inside [`yourDetails.ts`](/const/yourDetails.ts) with your tokenId.
+
+
 ### 4. Configure Your Network
 
 Inside [`_app.tsx`](/pages/_app.tsx) you can configure the network you want to use:
