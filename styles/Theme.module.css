@@ -4,8 +4,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 98vw;
-  max-width: 100%;
+  width: 100vw;
 }
 
 .previewImage {
@@ -30,15 +29,6 @@
   border-radius: 16px;
 }
 
-.mintContainer {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  gap: 10%;
-  margin-top: 24px;
-}
-
 .infoSide {
   display: flex;
   flex-direction: column;
@@ -53,13 +43,22 @@
 }
 
 .imageSide {
-  width: 45%;
+  width: 25%;
   height: 100%;
 }
 
 .image {
   width: 85%;
   border-radius: 16px;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin: 12px 0;
 }
 
 .mainButton {
@@ -88,7 +87,7 @@
     var(--color-secondary) 101.52%
   );
   color: #fff;
-  width: 180px;
+  padding: 20px;
   text-align: center;
   border-radius: 9999px;
   border-style: none;
@@ -136,6 +135,15 @@
   gap: 10%;
 }
 
+.mintContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 10%;
+  margin-top: 24px;
+}
+
 .textInput {
   width: 48px;
   background-color: transparent;
@@ -162,6 +170,7 @@
   opacity: 0.25;
 }
 
+
 /* On mobile, make the .mintInfoContainer stack vertically */
 @media screen and (max-width: 850px) {
   .mintInfoContainer {
@@ -171,6 +180,10 @@
 
   .infoSide {
     width: 100%;
+  }
+
+  .mintButton {
+    max-width: 100% !important;
   }
 
   .imageSide {

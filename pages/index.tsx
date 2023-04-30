@@ -14,13 +14,7 @@ import type { NextPage } from "next";
 import { useMemo, useState } from "react";
 import styles from "../styles/Theme.module.css";
 import { parseIneligibility } from "../utils/parseIneligibility";
-
-// Put Your Edition Drop Contract address from the dashboard here
-const myEditionDropContractAddress =
-  "0xDC8017E1E20BFF80a49B0B92F719f00170013B4F";
-
-// Put your token ID here
-const tokenId = 0;
+import { myEditionDropContractAddress, tokenId } from "../const/yourDetails";
 
 const Home: NextPage = () => {
   const address = useAddress();

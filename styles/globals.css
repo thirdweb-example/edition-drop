@@ -29,8 +29,12 @@ body {
   background: var(--background-color);
   font-family: var(--font);
   color: var(--text-color);
+
   display: flex;
+  margin: 0;
   text-align: center;
+  overflow-x: hidden;
+
 }
 
 /* Box sizing rules */
