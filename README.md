@@ -16,6 +16,8 @@ Run this command from the terminal to clone this project:
 
 ```bash
 npx thirdweb create --template edition-drop
+//to-do
+// add costum scenario
 ```
 
 ### 1. Deploy Your Own Edition Drop on thirdweb
