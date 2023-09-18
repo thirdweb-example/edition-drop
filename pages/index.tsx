@@ -14,7 +14,7 @@ import type { NextPage } from "next";
 import { useMemo, useState } from "react";
 import styles from "../styles/Theme.module.css";
 import { parseIneligibility } from "../utils/parseIneligibility";
-import { myEditionDropContractAddress, tokenId } from "../const/yourDetails";
+//import { myEditionDropContractAddress, tokenId } from "../const/yourDetails";
 
 const Home: NextPage = () => {
   const address = useAddress();
