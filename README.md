@@ -22,7 +22,7 @@ npx thirdweb create --template edition-drop
 
 ### 1. Deploy Your Own Edition Drop on thirdweb
 
-Head to the [dashboard](https://thirdweb.com/dashboard) and create your own **Edition Drop** contract.
+Head to the [dashboard](https://thirdweb.com/dashboard) and create your own **Edition 1 Drop** contract.
 
 You can learn how to do that with our guide [Release an NFT drop on your own site without writing any code](https://portal.thirdweb.com/guides/release-an-nft-drop-with-no-code#create-a-drop-contract).
 
