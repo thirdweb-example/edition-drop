@@ -10,7 +10,7 @@ In this template, we build a page where users can claim NFTs from the [Edition D
 
 ## Using This Repo
 
-To create your own version of this template, you can use the following steps:
+//To create your own version of this template, you can use the following steps:
 
 Run this command from the terminal to clone this project:
 
